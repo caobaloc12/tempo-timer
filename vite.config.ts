@@ -46,6 +46,8 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,webmanifest}'],
+        // The share card is for crawlers, not part of the offline app shell.
+        globIgnores: ['**/og-image.png'],
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
       },

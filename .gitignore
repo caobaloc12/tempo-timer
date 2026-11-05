@@ -12,8 +12,9 @@ dist
 dist-ssr
 *.local
 
-# Generated PWA icons (recreated by `npm run icons` / `npm run build`)
+# Generated PWA icons and share card (recreated by `npm run icons` / `npm run build`)
 public/icons/
+public/og-image.png
 
 # Deployment
 .vercel

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 /**
- * Generates Tempo's PWA icons and favicon.
+ * Generates Tempo's PWA icons, favicon, and Open Graph share card.
  *
  * Design: near-black field, thick amber timer ring, and a short teal accent
  * arc at 12 o'clock. The maskable variant fills the canvas edge-to-edge and
  * keeps the ring inside the central 80% safe zone (a radius of 204.8 px on a
- * 512 px canvas).
+ * 512 px canvas). The 1200x630 share card pairs the ring with the wordmark
+ * and tagline for Open Graph / Twitter previews.
  *
  * Run with: npm run icons
  */
@@ -69,6 +70,28 @@ function buildSvg(variantName) {
 `
 }
 
+function buildOgImage() {
+  const width = 1200
+  const height = 630
+  const cx = 890
+  const cy = 315
+  const radius = 170
+  const stroke = 42
+  const accent = arcPath(cx, cy, radius, -90, 52)
+  const font = "Arial, 'Helvetica Neue', 'DejaVu Sans', sans-serif"
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <rect width="${width}" height="${height}" fill="${BG}"/>
+  <circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="${AMBER}" stroke-width="${stroke}"/>
+  <path d="${accent}" fill="none" stroke="${TEAL}" stroke-width="${stroke}" stroke-linecap="round"/>
+  <text x="80" y="270" font-family="${font}" font-size="96" font-weight="700" letter-spacing="12" fill="#F5F5F4">TEMPO</text>
+  <text x="84" y="345" font-family="${font}" font-size="38" fill="#A1A1AA">Interval timer &amp; 4-7-8 breathing</text>
+  <rect x="84" y="382" width="72" height="3" rx="1.5" fill="${TEAL}"/>
+  <text x="84" y="442" font-family="${font}" font-size="28" fill="#71717A">40/20 &amp; 45/15 work-rest sets · guided breath</text>
+</svg>
+`
+}
+
 async function main() {
   await mkdir(ICONS_DIR, { recursive: true })
 
@@ -92,6 +115,18 @@ async function main() {
 
   await writeFile(join(PUBLIC_DIR, 'favicon.svg'), buildSvg('standard'), 'utf8')
   console.log('wrote public/favicon.svg (512x512 viewBox)')
+
+  const ogPath = join(PUBLIC_DIR, 'og-image.png')
+  await sharp(Buffer.from(buildOgImage()))
+    .removeAlpha()
+    .png({ compressionLevel: 9 })
+    .toFile(ogPath)
+
+  const ogMeta = await sharp(ogPath).metadata()
+  if (ogMeta.width !== 1200 || ogMeta.height !== 630) {
+    throw new Error(`og-image.png: expected 1200x630, got ${ogMeta.width}x${ogMeta.height}`)
+  }
+  console.log('wrote public/og-image.png (1200x630)')
 }
 
 main().catch((error) => {

@@ -37,9 +37,10 @@ npm run preview    # preview the production build
 npm run icons      # regenerate PWA icons and public/favicon.svg
 ```
 
-The icon script uses `sharp` and writes the PNGs in `public/icons/` plus
-`public/favicon.svg`. The PNGs are generated assets and are not committed:
-`npm run build` runs the script automatically via the `prebuild` hook.
+The icon script uses `sharp` and writes the PNGs in `public/icons/`, plus
+`public/favicon.svg` and a 1200×630 `public/og-image.png` share card. The PNGs
+and the share card are generated assets and are not committed: `npm run build`
+runs the script automatically via the `prebuild` hook.
 
 ## Install on a phone
 
@@ -57,6 +58,14 @@ Import the repository into Vercel and use the Vite framework preset with build
 command `npm run build` and output directory `dist`; Vercel auto-detects these.
 Alternatively, deploy with the Vercel CLI. HTTPS is required for the PWA
 service worker, installation, and the Screen Wake Lock API.
+
+## SEO and sharing
+
+`index.html` carries the page description and keywords, a canonical URL, Open
+Graph and Twitter card tags, and `WebApplication` JSON-LD. The absolute URLs use
+`https://tempo-timer.vercel.app/`; update them if the deployed Vercel domain
+differs. Every build also regenerates the 1200×630 `public/og-image.png` social
+card via the icon script.
 
 ## Architecture
 

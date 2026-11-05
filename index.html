@@ -6,18 +6,97 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
+
+    <title>Tempo — Interval Timer &amp; 4-7-8 Breathing</title>
+    <meta
+      name="description"
+      content="A minimal interval timer for 40/20 and 45/15 work-rest sets, plus guided 4-7-8 breathing exercises. Works offline as a PWA."
+    />
+    <meta
+      name="keywords"
+      content="interval timer, work rest timer, HIIT timer, exercise timer, workout timer, 4-7-8 breathing, breathing exercise, guided breathing, PWA"
+    />
+    <meta name="author" content="Loc Cao" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="application-name" content="Tempo" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="format-detection" content="telephone=no" />
     <meta name="theme-color" content="#0A0A0B" />
-    <meta name="description" content="Tempo — a minimal interval and 4-7-8 breathing timer." />
+
+    <!-- Update these absolute URLs if the deployed Vercel domain differs. -->
+    <link rel="canonical" href="https://tempo-timer.vercel.app/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tempo" />
+    <meta property="og:title" content="Tempo — Interval Timer &amp; 4-7-8 Breathing" />
+    <meta
+      property="og:description"
+      content="A minimal interval timer for 40/20 and 45/15 work-rest sets, plus guided 4-7-8 breathing exercises. Works offline as a PWA."
+    />
+    <meta property="og:url" content="https://tempo-timer.vercel.app/" />
+    <meta property="og:image" content="https://tempo-timer.vercel.app/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Tempo — interval timer and 4-7-8 breathing app"
+    />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tempo — Interval Timer &amp; 4-7-8 Breathing" />
+    <meta
+      name="twitter:description"
+      content="A minimal interval timer for 40/20 and 45/15 work-rest sets, plus guided 4-7-8 breathing exercises. Works offline as a PWA."
+    />
+    <meta name="twitter:image" content="https://tempo-timer.vercel.app/og-image.png" />
+    <meta
+      name="twitter:image:alt"
+      content="Tempo — interval timer and 4-7-8 breathing app"
+    />
+    <meta name="twitter:url" content="https://tempo-timer.vercel.app/" />
+
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Tempo" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-    <title>Tempo — Intervals &amp; Breathing</title>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Tempo",
+        "url": "https://tempo-timer.vercel.app/",
+        "description": "A minimal interval timer for 40/20 and 45/15 work-rest sets, plus guided 4-7-8 breathing exercises. Works offline as a PWA.",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript. Works offline after first load.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "40/20 and 45/15 work-rest interval timer",
+          "4-7-8 guided breathing with bowl and wave cues",
+          "Offline PWA with screen wake lock"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <p>
+        Tempo is an interval timer and 4-7-8 breathing app. Enable JavaScript to use it.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
