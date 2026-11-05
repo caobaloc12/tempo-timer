@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Tempo">
+  <title>Tempo</title>
+  <rect width="512" height="512" fill="#0A0A0B"/>
+  <circle cx="256" cy="256" r="184" fill="none" stroke="#F59E0B" stroke-width="44"/>
+  <path d="M 256.00 72.00 A 184 184 0 0 1 400.99 142.72" fill="none" stroke="#2DD4BF" stroke-width="44" stroke-linecap="round"/>
+</svg>
