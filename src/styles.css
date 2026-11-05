@@ -2,6 +2,7 @@
 
 @theme {
   --color-bg: #0a0a0b;
+  --color-shell: #050506;
   --color-surface: #141416;
   --color-surface-2: #1c1c1f;
   --color-border: #2a2a2e;
@@ -30,7 +31,7 @@ body,
 
 body {
   margin: 0;
-  background: var(--color-bg);
+  background: var(--color-shell);
   color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

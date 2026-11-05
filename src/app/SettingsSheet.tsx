@@ -60,7 +60,7 @@ export function SettingsSheet({ open, settings, onChange, onClose }: SettingsShe
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/60"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 md:items-center"
       onClick={onClose}
       role="presentation"
     >
@@ -68,7 +68,7 @@ export function SettingsSheet({ open, settings, onChange, onClose }: SettingsShe
         role="dialog"
         aria-modal="true"
         aria-labelledby="settings-title"
-        className="sheet safe-bottom w-full max-w-md rounded-t-3xl border-t border-border bg-surface px-6 pt-5"
+        className="sheet safe-bottom w-full max-w-[480px] rounded-t-3xl border-t border-border bg-surface px-6 pt-5 md:rounded-3xl md:border md:shadow-2xl md:shadow-black/50"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-1 flex items-center justify-between">
