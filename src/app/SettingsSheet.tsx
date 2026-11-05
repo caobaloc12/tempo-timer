@@ -99,12 +99,6 @@ export function SettingsSheet({ open, settings, onChange, onClose }: SettingsShe
           />
         </div>
 
-        <div className="mt-4 border-t border-border pt-4 pb-2">
-          <p className="text-xs leading-relaxed text-muted">
-            Tempo v0.1.0 · local-only, no accounts. The screen stays on during a session;
-            iOS pauses web timers if the screen locks, so keep the app visible.
-          </p>
-        </div>
       </div>
     </div>
   )
