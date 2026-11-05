@@ -63,9 +63,10 @@ service worker, installation, and the Screen Wake Lock API.
 
 `index.html` carries the page description and keywords, a canonical URL, Open
 Graph and Twitter card tags, and `WebApplication` JSON-LD. The absolute URLs use
-`https://tempo-timer.vercel.app/`; update them if the deployed Vercel domain
-differs. Every build also regenerates the 1200×630 `public/og-image.png` social
-card via the icon script.
+the live deployment at `https://tempo-timer-peach.vercel.app/`; update them if
+you add a custom domain. `public/robots.txt` and `public/sitemap.xml` point at
+the same canonical URL. Every build also regenerates the 1200×630
+`public/og-image.png` social card via the icon script.
 
 ## Architecture
 

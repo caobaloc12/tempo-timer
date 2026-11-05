@@ -14,7 +14,7 @@ export default defineConfig({
       manifest: {
         name: 'Tempo',
         short_name: 'Tempo',
-        description: 'A minimal interval and 4-7-8 breathing timer.',
+        description: 'A minimal exercise interval timer and 4-7-8 breathing app.',
         lang: 'en',
         dir: 'ltr',
         theme_color: '#0A0A0B',

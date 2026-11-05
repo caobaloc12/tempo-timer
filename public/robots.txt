@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tempo-timer-peach.vercel.app/sitemap.xml
