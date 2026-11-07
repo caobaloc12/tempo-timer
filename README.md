@@ -8,8 +8,8 @@ analytics.
 
 - **Intervals** — 40/20 and 45/15 work/rest presets, 1–30 rounds (default 8).
   Every round is 60 seconds, and a 3-second "Get ready" precedes the first
-  work phase. Cues mark the last three seconds of Get ready and each rest,
-  phase transitions, and the finish.
+  work phase. Cues count down the last three seconds of every work and rest
+  phase (and Get ready), mark phase transitions, and signal the finish.
 - **Breathing** — 4-7-8 (inhale 4s, hold 7s, exhale 8s) for 8, 12, or 16
   cycles (default 8), with distinct singing-bowl and ocean-wave cues.
 

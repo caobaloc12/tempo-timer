@@ -25,7 +25,7 @@ function getContext(): AudioContext {
     // Interval cues get their own bus so they can be much louder than the
     // calm breathing bowls without changing the breathing mix.
     beepBus = context.createGain()
-    beepBus.gain.value = 1.7
+    beepBus.gain.value = 1.9
     beepBus.connect(master)
   }
   return context
@@ -134,21 +134,21 @@ export function playBeep(kind: BeepKind): void {
 
   if (kind === 'end') {
     // Rising triad: unmistakable completion cue.
-    toneAt(at, 900, 0.14, 0.3)
-    toneAt(at + 0.18, 1100, 0.14, 0.32)
-    toneAt(at + 0.36, 1300, 0.18, 0.34)
+    toneAt(at, 900, 0.14, 0.36)
+    toneAt(at + 0.18, 1100, 0.14, 0.38)
+    toneAt(at + 0.36, 1300, 0.18, 0.4)
     return
   }
 
   if (kind === 'count') {
-    // High, short, bright: 3, 2, 1.
-    toneAt(at, 1200, 0.13, 0.3)
+    // High, bright, and the loudest cue: 3, 2, 1 at the end of work/rest.
+    toneAt(at, 1200, 0.15, 0.42)
     return
   }
 
   // Work/rest transition: a double beep, distinct from the single count beep.
-  toneAt(at, 900, 0.11, 0.28)
-  toneAt(at + 0.18, 900, 0.11, 0.28)
+  toneAt(at, 900, 0.11, 0.34)
+  toneAt(at + 0.18, 900, 0.11, 0.34)
 }
 
 function playBowl(root: number, duration: number): void {

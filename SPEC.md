@@ -25,7 +25,7 @@ Two modes: **Intervals** and **Breathing**. English UI. Dark-first. No backend.
 - Colors: work amber, rest teal.
 - Controls: start, pause/resume, skip phase, stop/reset.
 - Audio cues:
-  - 3-2-1 beeps during the last 3 seconds of getReady and each rest (into work).
+  - 3-2-1 beeps during the last 3 seconds of getReady, every work phase, and every rest phase.
   - Distinct transition beep on work→rest and rest→work.
   - Triple beep when finished.
 - Wake Lock keeps the screen on during an active session; re-acquire on visibility.
@@ -86,4 +86,4 @@ plain stopwatch, Play Store, or analytics.
 - iOS Safari suspends JavaScript when the screen locks; v1 keeps the screen on.
 - True background audio / lock-screen operation is native-app territory (Capacitor later).
 - iOS Safari has no Vibration API; no haptics.
-- Sound cues are synthesized with Web Audio (no external assets to license).
+- Sound cues are synthesized with Web Audio (no external assets).
