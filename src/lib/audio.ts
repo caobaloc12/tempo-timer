@@ -10,6 +10,7 @@ type AudioSessionNavigator = Navigator & {
 
 let context: AudioContext | null = null
 let master: GainNode | null = null
+let beepBus: GainNode | null = null
 let muted = false
 
 const activeSources = new Set<AudioScheduledSourceNode>()
@@ -20,6 +21,12 @@ function getContext(): AudioContext {
     master = context.createGain()
     master.gain.value = muted ? 0 : 0.7
     master.connect(context.destination)
+
+    // Interval cues get their own bus so they can be much louder than the
+    // calm breathing bowls without changing the breathing mix.
+    beepBus = context.createGain()
+    beepBus.gain.value = 1.7
+    beepBus.connect(master)
   }
   return context
 }
@@ -27,6 +34,11 @@ function getContext(): AudioContext {
 function getMaster(): GainNode {
   getContext()
   return master as GainNode
+}
+
+function getBeepBus(): GainNode {
+  getContext()
+  return beepBus as GainNode
 }
 
 export function setMuted(value: boolean): void {
@@ -79,22 +91,40 @@ export function stopAll(): void {
   activeSources.clear()
 }
 
-function beepAt(at: number, frequency: number, duration: number, peak: number): void {
+function toneAt(
+  at: number,
+  frequency: number,
+  duration: number,
+  peak: number,
+): void {
   const ctx = getContext()
-  const out = getMaster()
-  const osc = ctx.createOscillator()
-  const gain = ctx.createGain()
+  const out = getBeepBus()
 
-  osc.type = 'sine'
-  osc.frequency.setValueAtTime(frequency, at)
-  gain.gain.setValueAtTime(0.0001, at)
-  gain.gain.exponentialRampToValueAtTime(peak, at + 0.008)
-  gain.gain.exponentialRampToValueAtTime(0.0001, at + duration)
+  // Triangle fundamental + a quiet octave harmonic. The harmonics are what
+  // cut through gym noise and music; a pure sine (the old cue) disappears.
+  const fundamental = ctx.createOscillator()
+  const fundamentalGain = ctx.createGain()
+  fundamental.type = 'triangle'
+  fundamental.frequency.setValueAtTime(frequency, at)
+  fundamentalGain.gain.setValueAtTime(0.0001, at)
+  fundamentalGain.gain.exponentialRampToValueAtTime(peak, at + 0.006)
+  fundamentalGain.gain.exponentialRampToValueAtTime(0.0001, at + duration)
+  fundamental.connect(fundamentalGain).connect(out)
+  fundamental.start(at)
+  fundamental.stop(at + duration + 0.02)
+  track(fundamental)
 
-  osc.connect(gain).connect(out)
-  osc.start(at)
-  osc.stop(at + duration + 0.02)
-  track(osc)
+  const harmonic = ctx.createOscillator()
+  const harmonicGain = ctx.createGain()
+  harmonic.type = 'sine'
+  harmonic.frequency.setValueAtTime(frequency * 2, at)
+  harmonicGain.gain.setValueAtTime(0.0001, at)
+  harmonicGain.gain.exponentialRampToValueAtTime(peak * 0.35, at + 0.004)
+  harmonicGain.gain.exponentialRampToValueAtTime(0.0001, at + duration * 0.8)
+  harmonic.connect(harmonicGain).connect(out)
+  harmonic.start(at)
+  harmonic.stop(at + duration + 0.02)
+  track(harmonic)
 }
 
 export function playBeep(kind: BeepKind): void {
@@ -103,18 +133,22 @@ export function playBeep(kind: BeepKind): void {
   const at = ctx.currentTime + 0.01
 
   if (kind === 'end') {
-    beepAt(at, 880, 0.11, 0.16)
-    beepAt(at + 0.16, 880, 0.11, 0.16)
-    beepAt(at + 0.32, 880, 0.14, 0.18)
+    // Rising triad: unmistakable completion cue.
+    toneAt(at, 900, 0.14, 0.3)
+    toneAt(at + 0.18, 1100, 0.14, 0.32)
+    toneAt(at + 0.36, 1300, 0.18, 0.34)
     return
   }
 
   if (kind === 'count') {
-    beepAt(at, 880, 0.07, 0.14)
+    // High, short, bright: 3, 2, 1.
+    toneAt(at, 1200, 0.13, 0.3)
     return
   }
 
-  beepAt(at, 660, 0.12, 0.16)
+  // Work/rest transition: a double beep, distinct from the single count beep.
+  toneAt(at, 900, 0.11, 0.28)
+  toneAt(at + 0.18, 900, 0.11, 0.28)
 }
 
 function playBowl(root: number, duration: number): void {

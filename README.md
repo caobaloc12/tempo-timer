@@ -80,8 +80,9 @@ the same canonical URL. Every build also regenerates the 1200×630
 ## Audio
 
 All cues are generated at runtime with the Web Audio API: additive singing
-bowls, a filtered-noise ocean wave, and sine beeps. No external audio assets
-are used, so there is no sample licensing to manage.
+bowls, a filtered-noise ocean wave, and bright triangle-wave interval beeps
+with an octave harmonic. No external audio assets are used, so there is no
+sample licensing to manage.
 
 ## Known limitations
 
