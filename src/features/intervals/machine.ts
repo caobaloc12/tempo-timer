@@ -6,7 +6,7 @@ export const MAX_ROUNDS = 30
 
 /**
  * No countdown second has been played yet. Count cues fire once per second
- * (3, 2, 1) while a get-ready or rest phase winds down.
+ * (3, 2, 1) while a get-ready, work, or rest phase winds down.
  */
 const NO_COUNT_SECOND = 4
 
@@ -163,7 +163,7 @@ function advanceOne(state: IntervalSession, at: number): IntervalSession {
 }
 
 function countdownSecondAt(state: IntervalSession, now: number): number | null {
-  if (state.phase !== 'getReady' && state.phase !== 'rest') return null
+  if (state.phase === 'finished') return null
   const remaining = state.phaseEndsAt - now
   if (remaining <= 0) return null
   const second = Math.ceil(remaining / 1000)

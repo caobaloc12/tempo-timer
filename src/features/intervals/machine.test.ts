@@ -239,16 +239,57 @@ describe('audio cue timing', () => {
     expect(go.cues).toEqual(['transition'])
   })
 
-  it('beeps 3-2-1 in the last seconds of rest, but never during work', () => {
+  it('beeps 3-2-1 in the last seconds of work', () => {
     let state = startSession()
     state = tick(state, READY_END).state // work 1
 
-    // One second left of work: no count cue.
-    const workTail = tick(state, WORK1_END - 1_000)
-    expect(workTail.state.phase).toBe('work')
-    expect(workTail.cues).toEqual([])
-    state = workTail.state
+    const c3 = tick(state, WORK1_END - 3_000)
+    expect(c3.state.phase).toBe('work')
+    expect(c3.cues).toEqual(['count'])
+    state = c3.state
 
+    const c2 = tick(state, WORK1_END - 2_000)
+    expect(c2.cues).toEqual(['count'])
+    state = c2.state
+
+    const c1 = tick(state, WORK1_END - 1_000)
+    expect(c1.cues).toEqual(['count'])
+    state = c1.state
+
+    // Same second, no repeat.
+    expect(tick(state, WORK1_END - 500).cues).toEqual([])
+
+    const toRest = tick(state, WORK1_END)
+    expect(toRest.cues).toEqual(['transition'])
+    expect(toRest.state.phase).toBe('rest')
+  })
+
+  it('counts down the final work phase into the end cue', () => {
+    let state = startSession()
+    state = tick(state, READY_END).state // work 1
+    state = tick(state, WORK1_END).state // rest 1
+    state = tick(state, REST1_END).state // work 2
+
+    const c3 = tick(state, WORK2_END - 3_000)
+    expect(c3.cues).toEqual(['count'])
+    state = c3.state
+
+    const c2 = tick(state, WORK2_END - 2_000)
+    expect(c2.cues).toEqual(['count'])
+    state = c2.state
+
+    const c1 = tick(state, WORK2_END - 1_000)
+    expect(c1.cues).toEqual(['count'])
+    state = c1.state
+
+    const finished = tick(state, WORK2_END)
+    expect(finished.cues).toEqual(['end'])
+    expect(finished.state.phase).toBe('finished')
+  })
+
+  it('beeps 3-2-1 in the last seconds of rest', () => {
+    let state = startSession()
+    state = tick(state, READY_END).state // work 1
     state = tick(state, WORK1_END).state // rest 1
     expect(state.phase).toBe('rest')
 
